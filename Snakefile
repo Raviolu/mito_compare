@@ -1,9 +1,28 @@
 
+import glob
+
+configfile: "config.yaml"
+
+
+metagenome = glob()
+
+rule all:
+    output:
+        expand("results/{sample}.treefile", sample=glob("data/*.fna"))
+        expand("results/{sample}.svg", sample=glob("data/*.fna"))
+
+
 rule CLASSIFY_SEQUENCES:
-    input: "data/{filename}.fna"
-    output: euk=""
-    conda:
-    shell: 
+    input: 
+        fasta = "data/{filename}.fna"
+    output:
+        euk = "results/{filename}/work/eukaryote_data.tsv",
+        mito = "results/{filename}/work/mitochondria_data.tsv"
+    conda: "envs/default.yaml"
+    run:
+        """
+        
+        """
 
 rule CREATE_MAFFT:
     input:
